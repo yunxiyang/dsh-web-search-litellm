@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax check
+        run: |
+          node --check lib/provider.js
+          node --check lib/index.js
+          node --check tests/search-e2e.mjs
+      - name: Manifest check
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            if (typeof pkg.dsh?.bundle?.patch !== "string") throw new Error("missing dsh.bundle.patch");
+            if (!/^- insert:/m.test(fs.readFileSync("cordis.patch.yml", "utf8"))) throw new Error("cordis.patch.yml has no insert");
+            console.log("manifest ok:", pkg.name, pkg.version);
+          '
+      - name: Package dry run
+        run: npm pack --dry-run

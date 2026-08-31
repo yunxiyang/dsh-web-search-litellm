@@ -51,6 +51,7 @@ patch config:
 | `apiKeyEnv` | `LITELLM_API_KEY` | credential reference resolved at each search |
 | `apiKey` | — | optional literal key (`secret` role) |
 | `maxTokens` | `4096` | `max_output_tokens` for one search request |
+| `timeoutMs` | `60000` | per-request timeout; times out as a structured `WEB_TIMEOUT` error |
 
 ## How it works
 

@@ -69,6 +69,17 @@ patch config:
 3. The LiteLLM proxy forwards the call; DeepSeek executes the search server-side and feeds results to the model.
 4. The provider parses the SSE stream: the final `output_text` becomes the result `content`, and every `web_search_call` item whose action is `open_page` contributes its URL to `sources`.
 
+## Session compatibility (why this plugin writes no custom session events)
+
+This plugin appends **no session events of its own**. The harness reads
+session logs fail-closed: any event type outside the build's
+`KNOWN_SESSION_EVENT_TYPES` catalog aborts loading unless the event envelope
+carries `ignorable: true`. A third-party type can never be in that catalog,
+and the public `session.append` API offers no way to set `ignorable`, so a
+custom log-only event here would make older harness builds refuse to open any
+session this plugin ran in. Searches are still fully visible in the session
+through the standard `web_search` tool call/result events.
+
 ## Known upstream limits (not configuration issues)
 
 - DeepSeek's Responses API documents `include` as **not supported**, so structured result items are consumed server-side; sources therefore carry `url` only (no title/snippet).

@@ -7,6 +7,15 @@ DSH `web_search` provider over the **LiteLLM proxy** using the **OpenAI Response
 - **No third-party search service** — search runs on DeepSeek's official server side, billed through your existing LiteLLM route.
 - **Fully configurable in the Settings UI** (`web-search-litellm` section).
 
+## 简介 / 快速上手（中文）
+
+这是 DeepSeek Harness `ctx.web` 能力的**联网搜索提供方**：`web_search` 请求走 **OpenAI Responses 协议**发往你的 **LiteLLM 代理**，由 DeepSeek 官方 Responses API **在服务端原生执行搜索**，返回带真实来源 URL 的答案。
+
+- 不需要 Anthropic 协议，也不需要新的 API Key——直接复用聊天模型页已配置的 `LITELLM_API_KEY`。
+- 不接任何第三方搜索服务；搜索在 DeepSeek 官方服务端完成，走你现有的 LiteLLM 计费路由。
+- 安装：`dsh plugin --profile <name> add dsh-web-search-litellm`，然后在 profile 的 `cordis.patch.yml` 里把 `web` 的 `searchProvider` 设为 `litellm-responses`（详见下方英文说明）。
+- 常见症状：`web_search` 报 `Authentication Fails, Your api key is invalid`，且你的 `DEEPSEEK_API_KEY` 其实是 LiteLLM 代理 key——装这个插件并把 `baseURL` 指向代理即可。
+
 ## 何时使用 / When to use
 
 Pick this provider when any of these is your situation:

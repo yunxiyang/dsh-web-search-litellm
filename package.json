@@ -20,10 +20,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-name/dsh-web-search-litellm.git"
+    "url": "git+https://github.com/yunxiyang/dsh-web-search-litellm.git"
   },
-  "homepage": "https://github.com/your-name/dsh-web-search-litellm#readme",
+  "homepage": "https://github.com/yunxiyang/dsh-web-search-litellm#readme",
   "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
   "main": "lib/index.js",
   "exports": {
     ".": {
@@ -38,6 +42,7 @@
     "lib/index.js",
     "lib/provider.js",
     "cordis.patch.yml",
+    "CHANGELOG.md",
     "README.md",
     "LICENSE"
   ],

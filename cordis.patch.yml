@@ -1,0 +1,12 @@
+# dsh bundle patch: inserts this plugin into a profile's layer stack.
+# Generic defaults: point `baseURL` at your LiteLLM proxy root (`/responses`
+# is appended), or set $LITELLM_SEARCH_BASE_URL. Override in the profile's
+# own cordis.patch.yml or through the harness Settings UI.
+- insert:
+    - id: litellm-responses-search
+      name: 'dsh-web-search-litellm'
+      config:
+        baseURL: http://127.0.0.1:4000/v1
+        model: openai/deepseek-v4-flash
+        apiKeyEnv: LITELLM_API_KEY
+        maxTokens: 4096

@@ -1,0 +1,67 @@
+{
+  "name": "dsh-web-search-litellm",
+  "version": "0.1.0",
+  "description": "Web search provider for the DeepSeek Harness ctx.web seam via the LiteLLM proxy OpenAI Responses API: DeepSeek's native server-side web_search through your proxy. Fixes web_search 'Authentication Fails, Your api key is invalid' (DEEPSEEK_API_KEY that is actually a proxy key); no Anthropic protocol, no third-party search service, reuses LITELLM_API_KEY.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-web-search",
+    "deepseek",
+    "deepseek-harness",
+    "web-search",
+    "web_search",
+    "search",
+    "litellm",
+    "responses-api",
+    "proxy",
+    "ctx.web",
+    "联网搜索"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-name/dsh-web-search-litellm.git"
+  },
+  "homepage": "https://github.com/your-name/dsh-web-search-litellm#readme",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./provider": {
+      "default": "./lib/provider.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/provider.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-credentials": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-launch-environment": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-settings": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-web": "^0.1.1-rc.2"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-credentials": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-launch-environment": {
+      "optional": true
+    }
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

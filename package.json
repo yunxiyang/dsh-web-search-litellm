@@ -1,6 +1,6 @@
 {
   "name": "dsh-web-search-litellm",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Web search provider for the DeepSeek Harness ctx.web seam via the LiteLLM proxy OpenAI Responses API: DeepSeek's native server-side web_search through your proxy. Fixes web_search 'Authentication Fails, Your api key is invalid' (DEEPSEEK_API_KEY that is actually a proxy key); no Anthropic protocol, no third-party search service, reuses LITELLM_API_KEY.",
   "keywords": [
     "dsh",

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 — 2026-09-01
+
+- **Timeout semantics redefined — no more total wall clock.** `timeoutMs` now
+  bounds the connect phase (wait for response headers) and applies an
+  idle-resetting deadline while streaming: the deadline resets on every chunk,
+  so a slow search with steady output is never killed mid-stream, while a
+  truly stalled connection still fails with a structured `WEB_TIMEOUT`.
+  (0.1.1 and earlier aborted the entire request at a fixed deadline even when
+  data was flowing — the reported "keeps timing out although results keep
+  coming" symptom.)
+- Regression tests: `tests/idle.test.mjs` (drip stream outlives the timeout)
+  and the existing hang test now asserts the connect-phase deadline.
+
 ## 0.1.1 — 2026-08-31
 
 - **Compatibility fix:** removed the log-only

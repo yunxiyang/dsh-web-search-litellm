@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.2 — 2026-09-09
+
+- Fix a load-time `SyntaxError` on the `>=0.1.2-rc.1` core (e.g. `0.1.3-alpha.2`):
+  drop the static import of `installSettingsSection` / `settingsNamespace`,
+  both removed from `@deepseek-ai/dsh-settings`. Settings registration now
+  feature-detects the core — `ctx.inject(["settings"], …)` + `installSection`
+  on the new core, the old top-level `installSettingsSection` on `<=0.1.1-rc.2`.
+  Works on both; the search provider is unaffected when settings cannot mount.
+
 ## 0.2.1 — 2026-09-09
 
 - Declare `@deepseek-ai/dsh-home-paths` as a runtime dependency (0.2.0 imported

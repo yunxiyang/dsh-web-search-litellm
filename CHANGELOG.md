@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.3 — 2026-09-09
+
+- **Derive, don't hardcode.** `baseURL`, `model`, `apiKeyEnv`, and
+  `candidateModels` are now optional: when unset, the provider reads dsh's
+  ACTIVE model configuration — `agentDefaultModel.currentSelection()` for the
+  active model, the `llm` configurable-provider directory for the active
+  provider's `baseURL`/`apiKeyEnv`/`models[]` — so the search rides the same
+  gateway and model pool as the chat on any machine. Explicit config still
+  overrides the derived values.
+
 ## 0.2.2 — 2026-09-09
 
 - Fix a load-time `SyntaxError` on the `>=0.1.2-rc.1` core (e.g. `0.1.3-alpha.2`):

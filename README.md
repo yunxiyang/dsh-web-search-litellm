@@ -53,12 +53,28 @@ Restart the profile (desktop: Settings → Desktop settings → Restart, or quit
 Settings section **web-search-litellm** (harness Settings UI) or the bundle
 patch config:
 
+## Configuration — derive, don't hardcode
+
+Every endpoint/model field is **optional**. When unset, the provider derives
+its values from dsh's **active model configuration** (the same provider the
+chat uses), so it works on any machine without baking in a proxy URL or model:
+
+- `baseURL` ← the active provider's `baseURL` (the chat's gateway).
+- `apiKeyEnv` ← the active provider's `apiKeyEnv`.
+- `model` ← the active model's id.
+- `candidateModels` ← the active provider's full `models[]` list, so discovery
+  can race every model on that gateway and latch onto the first that actually
+  runs `web_search`.
+
+Only set a field here to **override** the derived value (e.g. to force a
+specific search model).
+
 | key | default | meaning |
 | --- | --- | --- |
-| `baseURL` | `$LITELLM_SEARCH_BASE_URL` → `http://127.0.0.1:4000/v1` | LiteLLM proxy root; `/responses` is appended |
-| `model` | `openai/deepseek-v4-flash` | starting model id; the first pick (must support server-side `web_search` to avoid a discovery round) |
-| `candidateModels` | `[]` | fallback pool tried in parallel when the active model fails to actually run `web_search`; the fastest searcher wins and is cached |
-| `apiKeyEnv` | `LITELLM_API_KEY` | credential reference resolved at each search |
+| `baseURL` | *derived* → `$LITELLM_SEARCH_BASE_URL` → `http://127.0.0.1:4000/v1` | LiteLLM proxy root; `/responses` is appended |
+| `model` | *derived* (active model) | starting model id; the first pick |
+| `candidateModels` | *derived* (active provider `models[]`) | fallback pool raced in parallel when the active model fails to actually run `web_search`; the fastest searcher wins and is cached |
+| `apiKeyEnv` | *derived* → `LITELLM_API_KEY` | credential reference resolved at each search |
 | `apiKey` | — | optional literal key (`secret` role) |
 | `maxTokens` | `4096` | `max_output_tokens` for one search request |
 | `timeoutMs` | `60000` | connect deadline + idle deadline for the response stream; resets whenever data arrives, so slow-but-active searches are never cut off (`WEB_TIMEOUT` only on real stalls) |

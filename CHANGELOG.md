@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 — 2026-09-09
+
+- Declare `@deepseek-ai/dsh-home-paths` as a runtime dependency (0.2.0 imported
+  it but did not list it, which could break resolution under strict host
+  resolvers on the latest web core); back all peer ranges to `^0.1.1-rc.2` and
+  drop the redundant home-paths peer so the manifest resolves cleanly.
+
 ## 0.2.0 — 2026-09-02
 
 - **Search-capable model auto-discovery with caching.** `model` is now the

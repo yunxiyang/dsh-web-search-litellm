@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 — 2026-09-02
+
+- **Search-capable model auto-discovery with caching.** `model` is now the
+  starting pick and a new `candidateModels` list names the fallback pool.
+  When the active model proves it does not actually run `web_search` (the
+  gateway streams a reply but never invokes the tool) — or hangs — the plugin
+  races every candidate on the *same query* and latches onto the first that
+  really searches, cancels the rest, and remembers the winner (persisted to
+  disk, so a restart skips re-probing). Requires gateways where not all models
+  have `web_search` wired (e.g. DeepSeek routed without a search backend next
+  to a GPT that has one).
+
 ## 0.1.2 — 2026-09-01
 
 - **Timeout semantics redefined — no more total wall clock.** `timeoutMs` now

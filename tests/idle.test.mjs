@@ -18,6 +18,10 @@ class CodedError extends Error {
 const TIMEOUT_MS = 1500;
 const server = createServer((req, res) => {
 	res.writeHead(200, { "content-type": "text/event-stream" });
+	// A real (slow) search: first the tool call, then a steady drip of answer
+	// text so the idle deadline resets on every chunk while the total work
+	// dwarfs TIMEOUT_MS.
+	res.write('data: {"type":"response.output_item.added","item":{"type":"web_search_call","action":{"type":"open_page","url":"https://example.com/drip"}}}\n\n');
 	res.write('data: {"type":"response.output_text.delta","delta":"drip "}\n\n');
 	// one chunk every 700ms for 6s — 4x TIMEOUT_MS overall, but no gap
 	// between chunks ever reaches TIMEOUT_MS, so the idle deadline resets.

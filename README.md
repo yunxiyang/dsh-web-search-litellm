@@ -56,7 +56,8 @@ patch config:
 | key | default | meaning |
 | --- | --- | --- |
 | `baseURL` | `$LITELLM_SEARCH_BASE_URL` → `http://127.0.0.1:4000/v1` | LiteLLM proxy root; `/responses` is appended |
-| `model` | `openai/deepseek-v4-flash` | model id routed through the proxy (must support server-side `web_search`) |
+| `model` | `openai/deepseek-v4-flash` | starting model id; the first pick (must support server-side `web_search` to avoid a discovery round) |
+| `candidateModels` | `[]` | fallback pool tried in parallel when the active model fails to actually run `web_search`; the fastest searcher wins and is cached |
 | `apiKeyEnv` | `LITELLM_API_KEY` | credential reference resolved at each search |
 | `apiKey` | — | optional literal key (`secret` role) |
 | `maxTokens` | `4096` | `max_output_tokens` for one search request |

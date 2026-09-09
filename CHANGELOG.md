@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.4 — 2026-09-10
+
+- **Ship a plain hot-mountable insert.** The bundle patch now carries only
+  `id` + `name` (no `config`, no expressions), so the market's hot-mount
+  parser activates the plugin live — no restart required after install. The
+  config was already derived at search time, so a bare insert is sufficient.
+
 ## 0.2.3 — 2026-09-09
 
 - **Derive, don't hardcode.** `baseURL`, `model`, `apiKeyEnv`, and

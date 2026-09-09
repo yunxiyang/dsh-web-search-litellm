@@ -1,11 +1,13 @@
 # dsh bundle patch: inserts this plugin into a profile's layer stack.
 #
-# The config is intentionally EMPTY: baseURL / model / apiKeyEnv /
-# candidateModels are all derived at search time from dsh's ACTIVE model
-# configuration (the same gateway and model pool the chat uses), so no proxy
-# URL or model id is baked in. Set a field here — or in the profile's own
-# cordis.patch.yml / the harness Settings UI — only to override the derivation.
+# This is a PLAIN insert — only `id` + `name`, no `config`, no expressions —
+# so the market's hot-mount parser can activate it live without a restart.
+#
+# The plugin config is intentionally empty and derived at search time from
+# dsh's ACTIVE model configuration (same gateway and model pool as the chat):
+# baseURL / model / apiKeyEnv / candidateModels all default to the active
+# provider/model. Set them only in the profile's own cordis.patch.yml or the
+# harness Settings UI to override the derivation.
 - insert:
     - id: litellm-responses-search
       name: 'dsh-web-search-litellm'
-      config: {}
